@@ -7,7 +7,7 @@ public class Main{
 		slotBN = new SlotBlackNip();
 		slotBN.preparePanels();
 		slotBN.prepareComponents();
-		slotBN.setFrontFocus(ScreenMode.TITLE);
+		slotBN.setFrontFocus(ScreenMode.GAME);
 		slotBN.setVisible(true);
 	}
 
