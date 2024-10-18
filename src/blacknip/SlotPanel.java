@@ -11,15 +11,20 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
 public class SlotPanel  extends JPanel implements PanelComponents{
-	JButton left, middle, right;
-	JLabel leftP, middleP, rightP;
+	JButton[] sb = new JButton[3];
+	JLabel[][] panel = new JLabel[3][3];
 	JLabel lever;
 	Timer timer1, timer2, timer3;
+	int[] s = new int[3];
+	int[] position = new int[3];
+	int t1, t2, t3;
+	
 	private Random random;
 	
 	Border slotframe = BorderFactory.createLineBorder(Color.BLACK, 2);
@@ -28,78 +33,79 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		this.setLayout(null);
 		this.setBackground(Color.white);
 		random = new Random();
+		position[0] = 10;
+		position[1] = 0;
+		position[2] = 10;
 	}
 	
 	public void prepareComponents() {
-		left = new JButton(); middle = new JButton(); right = new JButton();
-		leftP = new JLabel(); middleP = new JLabel(); rightP = new JLabel();
+		for(int i=0; i < panel.length; i++) {
+			s[i] = 1;
+			sb[i] = new JButton();
+			sb[i].setIcon(RSM.normalButton);
+			sb[i].setContentAreaFilled(false);
+			sb[i].setBorderPainted(false);
+			sb[i].setFocusPainted(false);
+			this.add(sb[i]);
+			for(int j=0; j < panel.length; j++) {
+				panel[i][j] = new JLabel();
+				panel[i][j].setText(Integer.toString((s[i] - 1 + i) % 10));
+				panel[i][j].setVerticalTextPosition(SwingConstants.CENTER);
+				this.add(panel[i][j]);
+			}
+		}
 		lever = new JLabel();
 		
-		left.setIcon(RSM.normalButton);
-		middle.setIcon(RSM.normalButton);
-		right.setIcon(RSM.normalButton);
+		sb[0].setBounds(x_pos(RSM.normalButton.getIconWidth()) - 60, 360, 60, 60);
+		sb[1].setBounds(x_pos(RSM.normalButton.getIconWidth()), 360, 60, 60);
+		sb[2].setBounds(x_pos(RSM.normalButton.getIconWidth()) + 60, 360, 60, 60);
 		
+		panel[1][0].setBounds(330, 250, 40, 80);
+		panel[1][1].setBounds(380, 250, 40, 80); 
+		panel[1][2].setBounds(430, 250, 40, 80);
+		panel[0][0].setBounds(332, 260, 20, 20);
+		panel[0][1].setBounds(382, 260, 20, 20);
+		panel[0][2].setBounds(432, 260, 20, 20);
+		panel[2][0].setBounds(332, 300, 20, 20);
+		panel[2][1].setBounds(382, 300, 20, 20);
+		panel[2][2].setBounds(432, 300, 20, 20);
 		
+		panel[1][0].setBorder(slotframe);
+		panel[1][1].setBorder(slotframe);
+		panel[1][2].setBorder(slotframe);
 		
-		left.setContentAreaFilled(false);
-		middle.setContentAreaFilled(false);
-		right.setContentAreaFilled(false);
-		
-		left.setBorderPainted(false);
-		middle.setBorderPainted(false);
-		right.setBorderPainted(false);
-		
-		left.setFocusPainted(false);
-		middle.setFocusPainted(false);
-		right.setFocusPainted(false);
-		
-		leftP.setBorder(slotframe);
-		middleP.setBorder(slotframe);
-		rightP.setBorder(slotframe);
-		
-		leftP.setText("1");
-		middleP.setText("2");
-		rightP.setText("3");
-		
-		left.setBounds(x_pos(RSM.normalButton.getIconWidth()) - 60, 360, 60, 60);
-		middle.setBounds(x_pos(RSM.normalButton.getIconWidth()), 360, 60, 60);
-		right.setBounds(x_pos(RSM.normalButton.getIconWidth()) + 60, 360, 60, 60);
-		
-		leftP.setBounds(330, 250, 40, 80);
-		middleP.setBounds(380, 250, 40, 80); 
-		rightP.setBounds(430, 250, 40, 80);
-		
-		this.add(left);
-		this.add(middle);
-		this.add(right);
-		this.add(leftP);
-		this.add(middleP);
-		this.add(rightP);
-		
-		left.addActionListener(new LeftButtonListener());
-		middle.addActionListener(new MiddleButtonListener());
-		right.addActionListener(new RightButtonListener());
+		sb[0].addActionListener(new LeftButtonListener());
+		sb[1].addActionListener(new MiddleButtonListener());
+		sb[2].addActionListener(new RightButtonListener());
 		
 		addMouseListener(new LeverMouseListener());
 		
-		timer1 = new Timer(100, new Timer1ActionListener());
-		timer2 = new Timer(100, new Timer2ActionListener());
-		timer3 = new Timer(100, new Timer3ActionListener());
-		}
+		do {
+			t1 = 100 + (random.nextInt(5) - 2) * 10;
+			t2 = 100 + (random.nextInt(5) - 2) * 10;
+			t3 = 100 + (random.nextInt(5) - 2) * 10;
+		} while ((t1 == t2) || (t2 == t3) || (t1 == t3));
+		timer1 = new Timer(t1 , new Timer1ActionListener());
+		timer2 = new Timer(t2, new Timer2ActionListener());
+		timer3 = new Timer(t3, new Timer3ActionListener());
+	}
 	
 	private class LeftButtonListener implements ActionListener{
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer1.stop();
 		}
 	}
 	
 	private class MiddleButtonListener implements ActionListener{
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer2.stop();
 		}
 	}
 	
 	private class RightButtonListener implements ActionListener{
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer3.stop();
 		}
@@ -120,20 +126,30 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 	private class Timer1ActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			leftP.setText(String.valueOf(random.nextInt(9) + 1));
+			s[0]++;
+			panel[0][0].setText(Integer.toString((s[0] - 1) % 10));
+			panel[0][1].setText(Integer.toString(s[0] % 10));
+			panel[0][2].setText(Integer.toString((s[0] + 1) % 10));
 		}
 	}
 	
 	private class Timer2ActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			middleP.setText(String.valueOf(random.nextInt(9) + 1));}
+			s[1]++;
+			panel[1][0].setText(Integer.toString((s[1] - 1) % 10));
+			panel[1][1].setText(Integer.toString(s[1] % 10));
+			panel[1][2].setText(Integer.toString((s[1] + 1) % 10));
+		}
 	}
 	
 	private class Timer3ActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			rightP.setText(String.valueOf(random.nextInt(9) + 1));
+			s[2]++;
+			panel[2][0].setText(Integer.toString((s[2] - 1) % 10));
+			panel[2][1].setText(Integer.toString(s[2] % 10));
+			panel[2][2].setText(Integer.toString((s[2] + 1) % 10));
 		}
 	}
 	
