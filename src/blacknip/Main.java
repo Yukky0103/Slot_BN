@@ -9,6 +9,7 @@ public class Main{
 		slotBN.prepareComponents();
 		slotBN.setFrontFocus(ScreenMode.GAME);
 		slotBN.setVisible(true);
+
 	}
 
 }

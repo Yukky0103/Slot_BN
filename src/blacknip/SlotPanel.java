@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,20 +18,22 @@ import javax.swing.border.Border;
 public class SlotPanel  extends JPanel implements PanelComponents{
 	JButton left, middle, right;
 	JLabel leftP, middleP, rightP;
-	JPanel lever;
-	Timer timer;
+	JLabel lever;
+	Timer timer1, timer2, timer3;
+	private Random random;
 	
 	Border slotframe = BorderFactory.createLineBorder(Color.BLACK, 2);
 	
 	SlotPanel(){
 		this.setLayout(null);
 		this.setBackground(Color.white);
+		random = new Random();
 	}
 	
 	public void prepareComponents() {
 		left = new JButton(); middle = new JButton(); right = new JButton();
 		leftP = new JLabel(); middleP = new JLabel(); rightP = new JLabel();
-		lever = new JPanel();
+		lever = new JLabel();
 		
 		left.setIcon(RSM.normalButton);
 		middle.setIcon(RSM.normalButton);
@@ -54,9 +57,9 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		middleP.setBorder(slotframe);
 		rightP.setBorder(slotframe);
 		
-		leftP.setText("left");
-		middleP.setText("middle");
-		rightP.setText("right");
+		leftP.setText("1");
+		middleP.setText("2");
+		rightP.setText("3");
 		
 		left.setBounds(x_pos(RSM.normalButton.getIconWidth()) - 60, 360, 60, 60);
 		middle.setBounds(x_pos(RSM.normalButton.getIconWidth()), 360, 60, 60);
@@ -79,24 +82,26 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		
 		addMouseListener(new LeverMouseListener());
 		
-		//timer = new Timer()
+		timer1 = new Timer(100, new Timer1ActionListener());
+		timer2 = new Timer(100, new Timer2ActionListener());
+		timer3 = new Timer(100, new Timer3ActionListener());
 		}
 	
 	private class LeftButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			timer1.stop();
 		}
 	}
 	
 	private class MiddleButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			timer2.stop();
 		}
 	}
 	
 	private class RightButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			
+			timer3.stop();
 		}
 	}
 	
@@ -104,11 +109,32 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if(SwingUtilities.isRightMouseButton(e)) {
-				//timer.start();
-				System.out.println("Right");
+				timer1.start();
+				timer2.start();
+				timer3.start();
 			}
 		}
 		
+	}
+	
+	private class Timer1ActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			leftP.setText(String.valueOf(random.nextInt(9) + 1));
+		}
+	}
+	
+	private class Timer2ActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			middleP.setText(String.valueOf(random.nextInt(9) + 1));}
+	}
+	
+	private class Timer3ActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			rightP.setText(String.valueOf(random.nextInt(9) + 1));
+		}
 	}
 	
 	public static int x_pos(int comwid) {
