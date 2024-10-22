@@ -23,6 +23,7 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 	Timer timer1, timer2, timer3;
 	int[] s = new int[3];
 	int t1, t2, t3;
+	boolean[] timsp;
 	
 	private Random random;
 	
@@ -31,9 +32,11 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 	SlotPanel(){
 		this.setLayout(null);
 		this.setBackground(Color.white);
+		timsp = new boolean[3];
 		random = new Random();
 		for(int n=0; n < s.length; n++) {
 			s[n] = random.nextInt(15);
+			timsp[n] = false;
 		}
 	}
 	
@@ -96,6 +99,8 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer1.stop();
+			timsp[0] = true;
+			Judgement();
 		}
 	}
 	
@@ -103,6 +108,8 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer2.stop();
+			timsp[1] = true;
+			Judgement();
 		}
 	}
 	
@@ -110,6 +117,8 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer3.stop();
+			timsp[2] = true;
+			Judgement();
 		}
 	}
 	
@@ -120,6 +129,9 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 				timer1.start();
 				timer2.start();
 				timer3.start();
+				timsp[0] = false;
+				timsp[1] = false;
+				timsp[2] = false;
 			}
 		}
 		
@@ -152,6 +164,20 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 			panel[0][2].setIcon(RSM.slotImage[(s[2] - 1) % 16]);
 			panel[1][2].setIcon(RSM.slotImage[(s[2]) % 16]);
 			panel[2][2].setIcon(RSM.slotImage[(s[2] + 1) % 16]);
+		}
+	}
+	
+	public void Judgement() {
+		if(timsp[0] && timsp[1] && timsp[2]) {
+			int ans1, ans2, ans3;
+			ans1 = s[0] % 16;
+			ans2 = s[1] % 16;
+			ans3 = s[2] % 16;
+			if((ans1 == ans2) && (ans2 == ans3)){
+				System.out.println("Correct");
+			}else {
+				System.out.println("Mistake");
+			}
 		}
 	}
 	
