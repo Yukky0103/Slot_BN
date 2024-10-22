@@ -51,6 +51,9 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 				panel[i][j] = new JLabel();
 				panel[i][j].setText(Integer.toString((s[i] - 1 + i) % 10));
 				panel[i][j].setVerticalTextPosition(SwingConstants.CENTER);
+				panel[i][j].setHorizontalTextPosition(SwingConstants.CENTER);
+				panel[i][j].setVerticalAlignment(SwingConstants.CENTER);
+				panel[i][j].setHorizontalAlignment(SwingConstants.CENTER);
 				this.add(panel[i][j]);
 			}
 		}
@@ -63,12 +66,12 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		panel[1][0].setBounds(330, 250, 40, 80);
 		panel[1][1].setBounds(380, 250, 40, 80); 
 		panel[1][2].setBounds(430, 250, 40, 80);
-		panel[0][0].setBounds(332, 260, 20, 20);
-		panel[0][1].setBounds(382, 260, 20, 20);
-		panel[0][2].setBounds(432, 260, 20, 20);
-		panel[2][0].setBounds(332, 300, 20, 20);
-		panel[2][1].setBounds(382, 300, 20, 20);
-		panel[2][2].setBounds(432, 300, 20, 20);
+		panel[0][0].setBounds(330, 260, 40, 20);
+		panel[0][1].setBounds(380, 260, 40, 20);
+		panel[0][2].setBounds(430, 260, 40, 20);
+		panel[2][0].setBounds(330, 300, 40, 20);
+		panel[2][1].setBounds(380, 300, 40, 20);
+		panel[2][2].setBounds(430, 300, 40, 20);
 		
 		panel[1][0].setBorder(slotframe);
 		panel[1][1].setBorder(slotframe);
