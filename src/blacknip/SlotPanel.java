@@ -86,9 +86,9 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		addMouseListener(new LeverMouseListener());
 		
 		do {
-			t1 = 100 + (random.nextInt(5) - 2) * 10;
-			t2 = 100 + (random.nextInt(5) - 2) * 10;
-			t3 = 100 + (random.nextInt(5) - 2) * 10;
+			t1 = 1000 + (random.nextInt(5) - 2) * 10;
+			t2 = 1000 + (random.nextInt(5) - 2) * 10;
+			t3 = 1000 + (random.nextInt(5) - 2) * 10;
 		} while ((t1 == t2) || (t2 == t3) || (t1 == t3));
 		timer1 = new Timer(t1 , new Timer1ActionListener());
 		timer2 = new Timer(t2, new Timer2ActionListener());
