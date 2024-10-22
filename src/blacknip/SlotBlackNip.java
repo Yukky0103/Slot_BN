@@ -16,6 +16,7 @@ public class SlotBlackNip extends JFrame{
 	
 	//パネルの宣言
 	SlotPanel slotPanel;
+	RSM rsm;
 	
 	public SlotBlackNip() {
 		//タイトル・アイコン
@@ -35,12 +36,14 @@ public class SlotBlackNip extends JFrame{
 	
 	public void preparePanels() {
 		slotPanel = new SlotPanel();
+		rsm  = new RSM();
 		this.add(slotPanel, "ゲーム画面");
 		this.pack();
 	}
 	
 	public void prepareComponents() {
 		//.prepareComponents();
+		rsm.prepareComponents();
 		slotPanel.prepareComponents();
 	}
 	
