@@ -82,26 +82,44 @@ public class SlotPanel  extends JPanel implements PanelComponents{
 		sb[0].addActionListener(new LeftButtonListener());
 		sb[1].addActionListener(new MiddleButtonListener());
 		sb[2].addActionListener(new RightButtonListener());
+		/*sb[0].addKeyListener(new LeftButtonListener());
+		sb[1].addKeyListener(new MiddleButtonListener());
+		sb[2].addKeyListener(new RightButtonListener());
+		
+		sb[0].setFocusable(true);
+		sb[0].requestFocusInWindow();
+		sb[1].setFocusable(true);
+		sb[1].requestFocusInWindow();
+		sb[2].setFocusable(true);
+		sb[2].requestFocusInWindow();*/
 		
 		addMouseListener(new LeverMouseListener());
 		
 		do {
-			t1 = 1000 + (random.nextInt(5) - 2) * 10;
-			t2 = 1000 + (random.nextInt(5) - 2) * 10;
-			t3 = 1000 + (random.nextInt(5) - 2) * 10;
+			t1 = 100 + (random.nextInt(5) - 2) * 10;
+			t2 = 100 + (random.nextInt(5) - 2) * 10;
+			t3 = 100 + (random.nextInt(5) - 2) * 10;
 		} while ((t1 == t2) || (t2 == t3) || (t1 == t3));
 		timer1 = new Timer(t1 , new Timer1ActionListener());
 		timer2 = new Timer(t2, new Timer2ActionListener());
 		timer3 = new Timer(t3, new Timer3ActionListener());
 	}
 	
-	private class LeftButtonListener implements ActionListener{
+	private class LeftButtonListener implements ActionListener/*, KeyListener*/{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			timer1.stop();
 			timsp[0] = true;
 			Judgement();
 		}
+		/*public void keyPressed(KeyEvent e) {
+			int keyCode = e.getKeyCode();
+			if(keyCode == KeyEvent.VK_1) {
+				
+			}
+		}
+		public void keyReleased(KeyEvent e) {}
+		public void keyTyped(KeyEvent e) {}*/
 	}
 	
 	private class MiddleButtonListener implements ActionListener{
