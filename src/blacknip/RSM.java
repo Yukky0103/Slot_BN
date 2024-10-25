@@ -6,7 +6,7 @@ public class RSM  implements PanelComponents{
 	static ImageIcon[] slotImage;
 	static ImageIcon[] firstChar;
 	
-	static ImageIcon normalButton = new ImageIcon(RSM.class.getClassLoader().getResource("赤ボタン.jpg"));
+	static ImageIcon normalButton = new ImageIcon(RSM.class.getClassLoader().getResource("赤ボタン.png"));
 	//static ImageIcon lampButton = new ImageIcon(RSM.class.getClassLoader().getResource("赤点灯ボタン.png"));
 	
 	public RSM(){
